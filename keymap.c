@@ -191,8 +191,8 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     if (is_master) {
         // If you want to change the display of OLED, you need to change here
         matrix_write_ln(matrix, read_layer_state());
-        matrix_write_ln(matrix, read_keylog());
-        matrix_write_ln(matrix, read_keylogs());
+        // matrix_write_ln(matrix, read_keylog());
+        // matrix_write_ln(matrix, read_keylogs());
         // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
         // matrix_write_ln(matrix, read_host_led_state());
         // matrix_write_ln(matrix, read_timelog());
@@ -222,12 +222,12 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        #ifdef SSD1306OLED
-            set_keylog(keycode, record);
-        #endif
-        // set_timelog();
-    }
+    // if (record->event.pressed) {
+    //     #ifdef SSD1306OLED
+    //         set_keylog(keycode, record);
+    //     #endif
+    //     // set_timelog();
+    // }
 
     switch (keycode) {
     case QWERTY:
