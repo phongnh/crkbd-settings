@@ -26,8 +26,8 @@ enum crkbd_layers {
 
 enum crkbd_keycodes {
     QWERTY = SAFE_RANGE,
-    RGB_RESET,
     EPRM,
+    RGB_RESET,
 };
 
 #define KC______     KC_TRNS
@@ -35,6 +35,7 @@ enum crkbd_keycodes {
 #define KC_LOWER     MO(_LOWER)
 #define KC_RAISE     MO(_RAISE)
 #define KC_RESET     RESET
+#define KC_EPRM      EPRM
 #define KC_RGB_RESET RGB_RESET
 #define KC_RGB_TOG   RGB_TOG
 #define KC_RGB_HUI   RGB_HUI
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
      * │CAPSLOCK│        │        │        │RGB RMOD│  SAT-  │                         │  SAT+  │RGB MOD │        │        │        │RGB TOG │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     * │        │        │        │        │        │  VAL-  │                         │  VAL+  │        │        │        │        │        │
+     * │        │        │        │        │        │  VAL-  │                         │  VAL+  │        │        │        │        │  EPRM  │
      * └────────┴────────┴────────┴────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┴────────┴────────┴────────┘
      *                                     │        │        │        │       │        │        │        │
      *                                     └────────┴────────┴────────┘       └────────┴────────┴────────┘
@@ -124,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST] = LAYOUT_kc( \
         RESET,   XXXXX,   XXXXX,   XXXXX,   AG_NORM, RGB_HUD,                           RGB_HUI, AG_SWAP, XXXXX,    XXXXX,  XXXXX,   RGB_RESET, \
         CAPS,    XXXXX,   XXXXX,   XXXXX,   RGB_RMO, RGB_SAD,                           RGB_SAI, RGB_MOD, XXXXX,    XXXXX,  XXXXX,   RGB_TOG,   \
-        XXXXX,   XXXXX,   XXXXX,   XXXXX,   XXXXX,   RGB_VAD,                           RGB_VAI, XXXXX,   XXXXX,    XXXXX,  XXXXX,   XXXXX,     \
+        XXXXX,   XXXXX,   XXXXX,   XXXXX,   XXXXX,   RGB_VAD,                           RGB_VAI, XXXXX,   XXXXX,    XXXXX,  XXXXX,   EPRM,      \
                                             _____,   _____,   _____,           _____,   _____,   _____                                          \
     ),
 
@@ -244,7 +245,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #endif
         return false;
         break;
+    case EPRM:
+        if (record->event.pressed) {
+            eeconfig_init();
+        }
+        return false;
+        break;
     }
     return true;
 }
-
