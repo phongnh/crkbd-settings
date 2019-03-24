@@ -160,19 +160,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 };
 
-
-void matrix_init_user(void) {
-    //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
-    #ifdef SSD1306OLED
-        iota_gfx_init(!has_usb());   // turns on the display
-    #endif
-}
-
-//SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
+// SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
 #ifdef SSD1306OLED
 
 // When add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
+// const char *read_layer_state(void);
 const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
@@ -183,19 +175,87 @@ const char *read_keylogs(void);
 // void set_timelog(void);
 // const char *read_timelog(void);
 
+// Copy from https://github.com/qmk/qmk_firmware/blob/master/keyboards/crkbd/keymaps/edvorakjp/oled.c
+const char *read_layer_state(void) {
+    static char layer_state_str[24];
+    char layer_name[17];
+
+    switch (biton32(layer_state)) {
+    case _QWERTY:
+        strcpy(layer_name, "Default");
+        break;
+    case _LOWER:
+        strcpy(layer_name, "Lower");
+        break;
+    case _RAISE:
+        strcpy(layer_name, "Raise");
+        break;
+    case _ADJUST:
+        strcpy(layer_name, "Adjust");
+        break;
+    case _MOUSE:
+        strcpy(layer_name, "Mouse");
+        break;
+    default:
+        snprintf(layer_name, sizeof(layer_name), "Undef-%ld", layer_state);
+    }
+
+    strcpy(layer_state_str, "Layer: ");
+
+    strcat(layer_state_str, layer_name);
+    strcat(layer_state_str, "\n");
+    return layer_state_str;
+}
+
+// Copy from https://github.com/qmk/qmk_firmware/blob/master/keyboards/crkbd/keymaps/edvorakjp/oled.c
+const char *read_mode_icon(bool windows_mode) {
+    static const char logo[][2][3] = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}}, {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}}};
+    static char mode_icon[10];
+
+    int mode_number = windows_mode ? 1 : 0;
+    strcpy(mode_icon, logo[mode_number][0]);
+
+    strcat(mode_icon, "\n");
+    strcat(mode_icon, logo[mode_number][1]);
+
+    return mode_icon;
+}
+
+// Copy from https://github.com/qmk/qmk_firmware/blob/master/keyboards/crkbd/keymaps/edvorakjp/oled.c
+const char *read_host_led_state(void) {
+    static char led_str[24];
+    // strcpy(led_str, (host_keyboard_leds() & (1<<USB_LED_NUM_LOCK)) ? "NMLK" : "    ");
+    // strcat(led_str, (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) ? " CAPS" : "    ");
+    // strcat(led_str, (host_keyboard_leds() & (1<<USB_LED_SCROLL_LOCK)) ? " SCLK" : "     ");
+    strcpy(led_str, (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) ? "CAPSLOCK" : "");
+    return led_str;
+}
+
+void matrix_init_user(void) {
+    iota_gfx_init(!has_usb());   // turns on the display
+}
+
 void matrix_scan_user(void) {
-   iota_gfx_task();
+    iota_gfx_task();
 }
 
 void matrix_render_user(struct CharacterMatrix *matrix) {
     if (is_master) {
         // If you want to change the display of OLED, you need to change here
-        matrix_write_ln(matrix, read_layer_state());
+        // matrix_write_ln(matrix, read_layer_state());
         // matrix_write_ln(matrix, read_keylog());
         // matrix_write_ln(matrix, read_keylogs());
         // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
         // matrix_write_ln(matrix, read_host_led_state());
         // matrix_write_ln(matrix, read_timelog());
+        // OLED Display:
+        //   - Mode Icon > Layer
+        //   - CAPSLOCK
+        matrix_write(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
+        matrix_write(matrix, " ");
+        matrix_write_ln(matrix, read_layer_state());
+        matrix_write(matrix, "   ");
+        matrix_write(matrix, read_host_led_state());
     } else {
         matrix_write(matrix, read_logo());
     }
