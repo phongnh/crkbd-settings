@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ┌────────┬────────┬────────┬────────┬────────┬────────┐                         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      * │ RESET  │        │        │        │AG NORM │  HUE-  │                         │  HUE+  │AG SWAP │        │        │        │RGB RST │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     * │RGB TOG │        │        │        │RGB RMOD│  SAT-  │                         │  SAT+  │RGB MOD │        │        │        │        │
+     * │CAPSLOCK│        │        │        │RGB RMOD│  SAT-  │                         │  SAT+  │RGB MOD │        │        │        │RGB TOG │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
      * │        │        │        │        │        │  VAL-  │                         │  VAL+  │        │        │        │        │        │
      * └────────┴────────┴────────┴────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┴────────┴────────┴────────┘
@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_ADJUST] = LAYOUT_kc( \
         RESET,   XXXXX,   XXXXX,   XXXXX,   AG_NORM, RGB_HUD,                           RGB_HUI, AG_SWAP, XXXXX,    XXXXX,  XXXXX,   RGB_RESET, \
-        RGB_TOG, XXXXX,   XXXXX,   XXXXX,   RGB_RMO, RGB_SAD,                           RGB_SAI, RGB_MOD, XXXXX,    XXXXX,  XXXXX,   XXXXX,     \
+        CAPS,    XXXXX,   XXXXX,   XXXXX,   RGB_RMO, RGB_SAD,                           RGB_SAI, RGB_MOD, XXXXX,    XXXXX,  XXXXX,   RGB_TOG,   \
         XXXXX,   XXXXX,   XXXXX,   XXXXX,   XXXXX,   RGB_VAD,                           RGB_VAI, XXXXX,   XXXXX,    XXXXX,  XXXXX,   XXXXX,     \
                                             _____,   _____,   _____,           _____,   _____,   _____                                          \
     ),
