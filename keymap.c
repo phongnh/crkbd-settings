@@ -55,6 +55,8 @@ enum crkbd_keycodes {
 #define KC_GUI_HOM   GUI_T(KC_HOME)
 #define KC_ALT_END   ALT_T(KC_END)
 #define KC_MOU_SCL   LT(_MOUSE, KC_SCLN)     // Turn on _MOUSE layer when held, ; when tapped
+#define KC_SAV_PIC   LSFT(LGUI(KC_4))        // Shift+Command+4: Save picture of selected area to the clipboard (macOS only)
+#define KC_COP_PIC   LCTL(LSFT(LGUI(KC_4)))  // Ctrl+Shift+Command+4: Copy picture of selected area to the clipboard (macOS only)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
@@ -95,11 +97,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /*
      * ┌────────┬────────┬────────┬────────┬────────┬────────┐                         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     * │        │   !    │   @    │   #    │   $    │   %    │                         │   ^    │   &    │   *    │   (    │   )    │        │
+     * │        │   !    │   @    │   #    │   $    │   %    │                         │   ^    │   &    │   *    │   (    │   )    │  Del   │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     * │        │        │  Left  │ Right  │   Up   │  PgUp  │                         │   -    │   =    │   {    │   }    │   |    │   `    │
+     * │        │CopyPic │  Left  │ Right  │   Up   │  PgUp  │                         │   -    │   =    │   {    │   }    │   |    │   `    │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     * │        │        │        │        │  Down  │  PgDn  │                         │   _    │   +    │   [    │   ]    │   \    │   ~    │
+     * │        │SavePic │        │        │  Down  │  PgDn  │                         │   _    │   +    │   [    │   ]    │   \    │   ~    │
      * └────────┴────────┴────────┴────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┴────────┴────────┴────────┘
      *                                     │        │        │        │       │        │        │        │
      *                                     └────────┴────────┴────────┘       └────────┴────────┴────────┘
