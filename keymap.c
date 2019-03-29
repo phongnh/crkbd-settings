@@ -49,11 +49,14 @@ enum crkbd_keycodes {
 #define KC_AG_NORM   AG_NORM
 #define KC_AG_SWAP   AG_SWAP
 #define KC_CTL_ESC   CTL_T(KC_ESC)
+#define KC_CTL_GRV   CTL_T(KC_GRV)
 #define KC_CTL_Z     CTL_T(KC_Z)
 #define KC_CTL_SLS   CTL_T(KC_SLSH)
 #define KC_GUI_QUO   GUI_T(KC_QUOT)
 #define KC_GUI_HOM   GUI_T(KC_HOME)
 #define KC_ALT_END   ALT_T(KC_END)
+#define KC_GUI_F11   GUI_T(KC_F11)
+#define KC_SFT_F12   SFT_T(KC_F12)
 #define KC_MOU_SCL   LT(_MOUSE, KC_SCLN)     // Turn on _MOUSE layer when held, ; when tapped
 #define KC_SAV_PIC   LSFT(LGUI(KC_4))        // Shift+Command+4: Save picture of selected area to the clipboard (macOS only)
 #define KC_COP_PIC   LCTL(LSFT(LGUI(KC_4)))  // Ctrl+Shift+Command+4: Copy picture of selected area to the clipboard (macOS only)
@@ -81,18 +84,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ┌────────┬────────┬────────┬────────┬────────┬────────┐                         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      * │   =    │   1    │   2    │   3    │   4    │   5    │                         │   6    │   7    │   8    │   9    │   0    │   -    │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     * │   `    │        │        │        │        │        │                         │        │        │        │        │        │        │
+     * │   `    │   F1   │   F2   │   F2   │   F2   │   F2   │                         │   F6   │   F7   │   F8   │   F9   │   F10  │  F11   │
      * ├────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     * │        │        │        │        │        │        │                         │        │        │        │        │        │        │
+     * │        │        │        │        │        │        │                         │        │        │        │        │        │  F12   │
      * └────────┴────────┴────────┴────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┴────────┴────────┴────────┘
      *                                     │        │        │        │       │        │        │        │
      *                                     └────────┴────────┴────────┘       └────────┴────────┴────────┘
      */
     [_LOWER] = LAYOUT_kc( \
-        EQL,     1,       2,       3,       4,       5,                                 6,       7,       8,       9,       0,        MINS,  \
-        GRV,     F1,      F2,      F3,      F4,      F5,                                F6,      F7,      F8,      F9,      F10,      _____, \
-        _____,   F11,     F12,     F13,     F14,     F15,                               F16,     F17,     F18,     F19,     F20,      _____, \
-                                            _____,   _____,   _____,           _____,   _____,   _____                                       \
+        EQL,     1,       2,       3,       4,       5,                                 6,       7,       8,       9,       0,        MINS,    \
+        CTL_GRV, F1,      F2,      F3,      F4,      F5,                                F6,      F7,      F8,      F9,      F10,      GUI_F11, \
+        _____,   XXXXX,   XXXXX,   XXXXX,   XXXXX,   XXXXX,                             XXXXX,   XXXXX,   XXXXX,   XXXXX,   XXXXX,    SFT_F12, \
+                                            _____,   _____,   _____,           _____,   _____,   _____                                         \
     ),
 
     /*
@@ -108,8 +111,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_RAISE] = LAYOUT_kc( \
         _____,   EXLM,    AT,      HASH,    DLR,     PERC,                              CIRC,    AMPR,    ASTR,    LPRN,    RPRN,     _____, \
-        _____,   XXXXX,   LEFT,    RGHT,    UP,      PGUP,                              MINS,    EQL,     LCBR,    RCBR,    PIPE,     GRV,   \
-        _____,   XXXXX,   XXXXX,   XXXXX,   DOWN,    PGDN,                              UNDS,    PLUS,    LBRC,    RBRC,    BSLS,     TILD,  \
+        _____,   COP_PIC, LEFT,    RGHT,    UP,      PGUP,                              MINS,    EQL,     LCBR,    RCBR,    PIPE,     GRV,   \
+        _____,   SAV_PIC, XXXXX,   XXXXX,   DOWN,    PGDN,                              UNDS,    PLUS,    LBRC,    RBRC,    BSLS,     TILD,  \
                                             _____,   _____,   _____,           _____,   _____,   _____                                       \
     ),
 
